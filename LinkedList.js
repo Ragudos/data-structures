@@ -76,18 +76,19 @@ class LinkedList {
   }
 
   remove(item) {
-    const currentNode = this.getNode(item);
+    let currentNode = this.head;
+    let previousNode = undefined;
+
+    for (let idx = 0; currentNode && idx < this.length; ++idx) {
+      if (currentNode.value === item) {
+        break;
+      }
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
 
     if (!currentNode) {
       return undefined;
-    }
-
-    let previousNode = this.head;
-    for (let idx = 0; previousNode && idx < this.length; ++idx) {
-      if (currentNode.value === previousNode.next.value) {
-        break;
-      }
-      previousNode = previousNode.next;
     }
 
     this.length = this.length - 1;
