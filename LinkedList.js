@@ -192,6 +192,8 @@ console.log(list);
 console.log(list.getItemAt(0));
 // returns { value: 1, next: undefined }
 console.log(list.get(1));
+// returns { value: 10, next: { value: 1, next: undefined } }
+console.log(list.get(10));
 
 /** Logs:
  * LinkedList {
