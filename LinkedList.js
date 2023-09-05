@@ -24,7 +24,7 @@ class LinkedList {
   }
 
   get(item) {
-    return this.getNode(item).value;
+    return this.getNode(item);
   }
 
   append(item) {
@@ -111,6 +111,33 @@ class LinkedList {
     currentNode.next = currentNode.next.next;
   }
 
+  reverseList() {
+    let currentNode = this.head;
+    let previousNode = undefined;
+    let nextNode = undefined;
+
+    for (let i = 0; i < this.length; ++i) {
+      if (!currentNode) {
+        break;
+      }
+      // temporarily store the value of the node the our current node
+      // is pointing towards
+      nextNode = currentNode.next;
+      // point the current node's next noed to the previous node
+      currentNode.next = previousNode;
+      // previous node is now equal to the current nod
+      previousNode = currentNode;
+      // now we just change the current node equal to the node
+      // that our current node was pointing towards previously
+      currentNode = nextNode;
+    }
+
+    // now we just swap the tail and the head
+    const temp = this.head;
+    this.head = previousNode;
+    this.tail = temp;
+  }
+
   initialize(item) {
     const node = { value: item };
     this.head = node;
@@ -162,5 +189,17 @@ console.log(list);
 
 // returns 3
 console.log(list.getItemAt(0));
+// returns { value: 1, next: undefined }
+console.log(list.get(1));
+
+/** Logs:
+ * LinkedList {
+  length: 3,
+  head: { value: 1, next: { value: 10, next: [Object] } },
+  tail: { value: 3, next: undefined }
+}
+ */
+list.reverseList();
+console.log(list);
 
 // list = { head: undefined, tail: undefined }
