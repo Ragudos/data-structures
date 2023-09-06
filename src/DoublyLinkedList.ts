@@ -45,6 +45,40 @@ class DoublyLinkedList<T> {
     this.head = node;
   }
 
+  insertAt(idx: number, item: T): void {
+    if (idx > this.length) {
+      throw new Error(
+        "Cannot insert an item on index: " +
+          idx +
+          ", that is past the list's length - 1. Current length: " +
+          this.length,
+      );
+    }
+
+    const INSERTING_ITEM_BEFORE_HEAD = idx === 0;
+    if (INSERTING_ITEM_BEFORE_HEAD) {
+      this.prepend(item);
+      return;
+    }
+
+    const INSERTING_ITEM_AFTER_TAIL = idx === this.length;
+    if (INSERTING_ITEM_AFTER_TAIL) {
+      this.append(item);
+      return;
+    }
+
+    this.length = this.length + 1;
+    const currentNode = this.generateDoublyLinkedListNode(item);
+    const nodeAtIndexToInsertCurrentNode = this.getItemNodeAt(idx);
+
+    if (nodeAtIndexToInsertCurrentNode && nodeAtIndexToInsertCurrentNode.prev) {
+      nodeAtIndexToInsertCurrentNode.prev.next = currentNode;
+      currentNode.prev = nodeAtIndexToInsertCurrentNode.prev;
+      nodeAtIndexToInsertCurrentNode.prev = currentNode;
+      currentNode.next = currentNode;
+    }
+  }
+
   getItem(item: T): DoublyLinkedListNode<T> | null | undefined {
     return this.getItemNode(item);
   }
@@ -182,4 +216,11 @@ console.log(doublyList);
 doublyList.removeAt(0);
 doublyList.removeAt(0);
 console.log("--- EMPTIED THE LIST ---")
+console.log(doublyList);
+
+doublyList.append("hello");
+doublyList.append("world");
+// insert in between "hello" & "world";
+doublyList.insertAt(1, "there");
+console.log("--- ADDED THREE ITEMS && STRING 'there' SHOULD BE IN THE MIDDLE ---");
 console.log(doublyList);
