@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true
+  }
+}

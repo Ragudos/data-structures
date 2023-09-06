@@ -1,10 +1,3 @@
-
-const object = {
-  value: 0,
-  prev: {} || undefined,
-  next: {} || undefined,
-};
-
 class LinkedList {
   constructor() {
     this.length = 0;
@@ -53,7 +46,10 @@ class LinkedList {
 
   insertAt(idx, item) {
     if (idx > this.length) {
-      throw new Error("We cannot insert past the length of the list. Current length: " + this.length);
+      throw new Error(
+        "We cannot insert past the length of the list. Current length: " +
+          this.length,
+      );
     }
 
     if (idx === 0) {
@@ -93,13 +89,25 @@ class LinkedList {
 
     this.length = this.length - 1;
     previousNode.next = currentNode.next;
-    this.tail = previousNode;
+    if (!currentNode.next) {
+      this.tail = previousNode;
+    }
     return currentNode;
   }
 
   removeAt(idx) {
     if (idx > this.length) {
-      throw new Error("Cannot remove an item past the list's length. Current length: " + this.length);
+      throw new Error(
+        "Cannot remove an item past the list's length. Current length: " +
+          this.length,
+      );
+    }
+
+    if (idx === 0) {
+      this.length = this.length - 1;
+      const tmp = this.head;
+      this.head = this.head?.next;
+      return tmp;
     }
 
     const currentNode = this.getPreviousNodeAt(idx);
@@ -108,8 +116,13 @@ class LinkedList {
       return undefined;
     }
 
-    this.length = this.length - 1;
+    const tmp = currentNode.next;
     currentNode.next = currentNode.next.next;
+    if (idx === this.length - 1) {
+      this.tail = currentNode;
+    }
+    this.length = this.length - 1;
+    return tmp;
   }
 
   reverseList() {
@@ -121,12 +134,12 @@ class LinkedList {
       if (!currentNode) {
         break;
       }
-      // temporarily store the value of the node the our current node
+      // temporarily store the value of the node our current node
       // is pointing towards
       nextNode = currentNode.next;
-      // point the current node's next noed to the previous node
+      // point the current node's next node to the previous node
       currentNode.next = previousNode;
-      // previous node is now equal to the current nod
+      // previous node is now equal to the current node
       previousNode = currentNode;
       // now we just change the current node equal to the node
       // that our current node was pointing towards previously
