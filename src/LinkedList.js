@@ -48,7 +48,7 @@ class LinkedList {
     if (idx > this.length) {
       throw new Error(
         "We cannot insert past the length of the list. Current length: " +
-          this.length,
+        this.length,
       );
     }
 
@@ -75,6 +75,13 @@ class LinkedList {
     let currentNode = this.head;
     let previousNode = undefined;
 
+    if (this.length === 1) {
+      this.length = 0;
+      this.tail = undefined;
+      this.head = undefined;
+      return;
+    }
+
     for (let idx = 0; currentNode && idx < this.length; ++idx) {
       if (currentNode.value === item) {
         break;
@@ -99,8 +106,15 @@ class LinkedList {
     if (idx > this.length) {
       throw new Error(
         "Cannot remove an item past the list's length. Current length: " +
-          this.length,
+        this.length,
       );
+    }
+
+    if (this.length === 1) {
+      this.length = 0;
+      this.tail = undefined;
+      this.head = undefined;
+      return;
     }
 
     if (idx === 0) {
@@ -117,7 +131,7 @@ class LinkedList {
     }
 
     const tmp = currentNode.next;
-    currentNode.next = currentNode.next.next;
+    currentNode.next = currentNode.next?.next;
     if (idx === this.length - 1) {
       this.tail = currentNode;
     }

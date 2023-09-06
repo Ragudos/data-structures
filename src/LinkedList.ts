@@ -83,6 +83,13 @@ class LinkedList<T> {
     let currentLinkedListNode = this.head;
     let previousLinkedListNode = undefined;
 
+    if (this.length === 1) {
+      this.length = 0;
+      this.tail = undefined;
+      this.head = undefined;
+      return;
+    }
+
     for (let idx = 0; currentLinkedListNode && idx < this.length; ++idx) {
       if (currentLinkedListNode.value === item) {
         break;
@@ -106,8 +113,15 @@ class LinkedList<T> {
   }
 
   removeAt(idx: number): LinkedListNode<T> | null | undefined {
-    if (idx > this.length) {
+    if (idx >= this.length) {
       throw new Error("Cannot remove an item past the list's length. Current length: " + this.length);
+    }
+
+    if (this.length === 1) {
+      this.length = 0;
+      this.tail = undefined;
+      this.head = undefined;
+      return;
     }
 
     if (idx === 0) {
@@ -117,16 +131,16 @@ class LinkedList<T> {
       return tmp;
     }
 
-    const currentLinkedListNode = this.getPreviousLinkedListNodeAt(idx);
+    const previousLinkedListNode = this.getPreviousLinkedListNodeAt(idx);
 
-    if (!currentLinkedListNode) {
+    if (!previousLinkedListNode) {
       return undefined;
     }
     
-    const tmp = currentLinkedListNode.next;
-    currentLinkedListNode.next = currentLinkedListNode.next?.next;
+    const tmp = previousLinkedListNode.next;
+    previousLinkedListNode.next = previousLinkedListNode.next?.next;
     if (idx === this.length - 1) {
-      this.tail = currentLinkedListNode;
+      this.tail = previousLinkedListNode;
     }
     this.length = this.length - 1;
     return tmp;
@@ -173,16 +187,22 @@ class LinkedList<T> {
 const list = new LinkedList();
 
 list.append(1);
-list.append(2);
-list.append(3);
-list.append(4);
-list.append(5);
-
-list.removeAt(1);
+list.removeAt(0);
 
 console.log(list);
+// list.append(2);
+// list.append(3);
+// list.append(4);
+// list.append(5);
+
+// // should remove 3 (2nd index);
+// list.removeAt(2);
+
+// console.log(list);
 // console.log(" ");
-// console.log(list.getItem(3));
+// // Check this console.log (Indeed removed 3);
+// console.log(list.getItemAt(0));
 // console.log(" ");
 // list.prepend(100);
-// console.log(list);
+// // 100 should be the new head
+// console.log(list.getItemAt(0));
