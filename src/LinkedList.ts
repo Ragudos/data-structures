@@ -1,10 +1,10 @@
 type LinkedListNode<T> = {
-  value: T,
-  next: LinkedListNode<T> | null | undefined
-}
+  value: T;
+  next: LinkedListNode<T> | null | undefined;
+};
 
 class LinkedList<T> {
-  private length: number;
+  public length: number;
   private tail: LinkedListNode<T> | null | undefined;
   private head: LinkedListNode<T> | null | undefined;
 
@@ -23,7 +23,6 @@ class LinkedList<T> {
 
     return currentLinkedListNode;
   }
-
 
   getItem(item: T): LinkedListNode<T> | null | undefined {
     return this.getLinkedListNode(item);
@@ -56,7 +55,10 @@ class LinkedList<T> {
 
   insertAt(idx: number, item: T): void {
     if (idx > this.length) {
-      throw new Error("We cannot insert past the length of the list. Current length: " + this.length);
+      throw new Error(
+        "We cannot insert past the length of the list. Current length: " +
+          this.length,
+      );
     }
 
     if (idx === 0) {
@@ -114,7 +116,10 @@ class LinkedList<T> {
 
   removeAt(idx: number): LinkedListNode<T> | null | undefined {
     if (idx >= this.length) {
-      throw new Error("Cannot remove an item past the list's length. Current length: " + this.length);
+      throw new Error(
+        "Cannot remove an item past the list's length. Current length: " +
+          this.length,
+      );
     }
 
     if (this.length === 1) {
@@ -136,7 +141,7 @@ class LinkedList<T> {
     if (!previousLinkedListNode) {
       return undefined;
     }
-    
+
     const tmp = previousLinkedListNode.next;
     previousLinkedListNode.next = previousLinkedListNode.next?.next;
     if (idx === this.length - 1) {
@@ -152,7 +157,9 @@ class LinkedList<T> {
     this.tail = node;
   }
 
-  private getPreviousLinkedListNodeAt(idx: number): LinkedListNode<T> | null | undefined {
+  private getPreviousLinkedListNodeAt(
+    idx: number,
+  ): LinkedListNode<T> | null | undefined {
     let currentNode = this.head;
 
     for (let i = 0; currentNode && i < idx - 1; ++i) {
@@ -165,7 +172,7 @@ class LinkedList<T> {
   private generateLinkedListNode(item: T): LinkedListNode<T> {
     return {
       value: item,
-      next: undefined
+      next: undefined,
     };
   }
 
@@ -181,7 +188,6 @@ class LinkedList<T> {
 
     return currentLinkedListNode;
   }
-
 }
 
 const list = new LinkedList();

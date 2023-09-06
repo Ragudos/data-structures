@@ -48,7 +48,7 @@ class LinkedList {
     if (idx > this.length) {
       throw new Error(
         "We cannot insert past the length of the list. Current length: " +
-        this.length,
+          this.length,
       );
     }
 
@@ -106,7 +106,7 @@ class LinkedList {
     if (idx > this.length) {
       throw new Error(
         "Cannot remove an item past the list's length. Current length: " +
-        this.length,
+          this.length,
       );
     }
 
