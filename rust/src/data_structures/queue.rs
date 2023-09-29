@@ -11,8 +11,8 @@ pub struct Queue<T> {
 impl<T> Queue<T> {
 
     pub fn enqueue(&mut self, item: T) {
-      self.length += 1;
-      self.data.push(item)
+        self.length += 1;
+        self.data.push(item)
     }
 
     pub fn dequeue(&mut self) -> Option<T> {
@@ -23,7 +23,7 @@ impl<T> Queue<T> {
             return item;
         }
 
-        return None;
+        None
     }
 
     pub fn peek(&self) -> Option<&T> {
@@ -32,7 +32,7 @@ impl<T> Queue<T> {
 }
 
 pub fn new_queue<T: Default>() -> Queue<T> {
-  let queue: Queue<T> = Queue { ..Default::default() };
+    let queue: Queue<T> = Queue { ..Default::default() };
 
-  return queue;
+    queue
 }

@@ -19,7 +19,7 @@ fn main() {
     chosen_data_structure = chosen_data_structure.trim().to_lowercase();
 
     for d in available_data_structures {
-        if chosen_data_structure == String::from(d) {
+        if chosen_data_structure == *d {
             run_queue();
             break;
         } else if chosen_data_structure.trim().to_lowercase() != ESCAPE_TEXT.trim().to_lowercase() {
@@ -59,7 +59,6 @@ fn run_queue() {
             queue.enqueue(data);
 
             println!("\n Your new data: {:#?}\n", queue);
-
             println!(
                 "What would you like to do next? You have these options: {:#?}.",
                 ..methods
@@ -68,7 +67,6 @@ fn run_queue() {
             queue.dequeue();
 
             println!("\n Your new data: {:#?}\n", queue);
-
             println!(
                 "What would you like to do next? You have these options: {:#?}.\n",
                 ..methods
@@ -84,7 +82,6 @@ fn run_queue() {
             let peek = queue.peek();
 
             println!("Data at front: {:#?}", peek);
-
             println!(
                 "What would you like to do next? You have these options: {:#?}.\n",
                ..methods
@@ -106,5 +103,5 @@ fn get_input() -> String {
         .read_line(&mut input)
         .expect("Failed to read line.");
 
-    return input;
+    input
 }
