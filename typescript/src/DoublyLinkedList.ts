@@ -79,8 +79,8 @@ class DoublyLinkedList<T> {
     }
   }
 
-  getItem(item: T): DoublyLinkedListNode<T> | null | undefined {
-    return this.getItemNode(item);
+  getItem(item: T, key?: keyof T): DoublyLinkedListNode<T> | null | undefined {
+    return this.getItemNode(item, key);
   }
 
   getItemAt(idx: number): DoublyLinkedListNode<T> | null | undefined {
@@ -95,8 +95,8 @@ class DoublyLinkedList<T> {
     return this.getItemNodeAt(idx);
   }
 
-  remove(item: T): DoublyLinkedListNode<T> | null | undefined {
-    const currentNode = this.getItemNode(item);
+  remove(item: T, key?: keyof T): DoublyLinkedListNode<T> | null | undefined {
+    const currentNode = this.getItemNode(item, key);
 
     if (!currentNode) {
       return undefined;
@@ -180,11 +180,22 @@ class DoublyLinkedList<T> {
     return currentNode;
   }
 
-  private getItemNode(item: T): DoublyLinkedListNode<T> | null | undefined {
+  private getItemNode(item: T, key?: keyof T): DoublyLinkedListNode<T> | null | undefined {
     let currentNode = this.head;
+    if (key && typeof item !== "object") {
+      throw new Error(
+        "Cannot use a key to look for an item that is not an object",
+      );
+    }
     for (let idx = 0; currentNode && idx < this.length; ++idx) {
-      if (currentNode.value === item) {
-        break;
+      if (key) {
+        if (currentNode.value[key] === item[key]) {
+          break;
+        }
+      } else {
+        if (currentNode.value === item) {
+          break;
+        }
       }
       currentNode = currentNode.next;
     }
@@ -222,5 +233,6 @@ doublyList.append("hello");
 doublyList.append("world");
 // insert in between "hello" & "world";
 doublyList.insertAt(1, "there");
+console.log("");
 console.log("--- ADDED THREE ITEMS && STRING 'there' SHOULD BE IN THE MIDDLE ---");
 console.log(doublyList);
